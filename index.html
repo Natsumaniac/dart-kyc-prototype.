@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DART | Xendit KYC Form</title>
+<style>
+:root{--green:#16845b;--green-dark:#106846;--orange:#f39a35;--ink:#17231f;--muted:#697872;--line:#e3ebe6;--bg:#f4f7f5;--white:#fff;--soft:#edf6f1;--danger:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
+.topbar{min-height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px max(22px,calc((100% - 1120px)/2));gap:12px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.3px}.logo{width:36px;height:36px;border-radius:12px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:18px}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:1.4px;margin-top:1px}.preview{font-size:12px;color:#8b5a14;background:#fff5e8;border:1px solid #f5dfbf;padding:7px 11px;border-radius:20px;font-weight:700}
+.wrap{max-width:1120px;margin:32px auto;padding:0 20px;display:grid;grid-template-columns:250px minmax(0,1fr);gap:26px}
+.side{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;height:max-content;position:sticky;top:20px}.side h3{font-size:14px;margin:0 0 5px}.side p{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 18px}.steps{display:grid;gap:5px}.step{display:flex;gap:10px;align-items:center;padding:11px 8px;border-radius:10px;color:#78857f;font-size:12px;font-weight:650}.step.active{background:var(--soft);color:var(--green-dark)}.step.complete{color:var(--green-dark)}.num{flex:0 0 27px;width:27px;height:27px;border:1px solid #dce6df;border-radius:50%;display:grid;place-items:center;font-size:11px;background:#fff}.step.active .num,.step.complete .num{background:var(--green);border-color:var(--green);color:#fff}
+.main{min-width:0}.intro{margin:0 0 20px}.eyebrow{font-size:11px;color:var(--green);font-weight:800;letter-spacing:1.5px;text-transform:uppercase}.intro h1{font-size:27px;margin:7px 0;letter-spacing:-.7px}.intro p{font-size:14px;color:var(--muted);margin:0;line-height:1.6}
+.horizontal-stepper{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:16px}.hstep{display:flex;align-items:center;gap:8px;color:#78857f;font-size:11px;font-weight:700;min-width:0}.hstep .num{width:26px;height:26px;flex-basis:26px}.hstep.active{color:var(--green-dark)}.hstep.active .num,.hstep.complete .num{background:var(--green);color:white;border-color:var(--green)}.hstep span:last-child{overflow-wrap:anywhere}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin-bottom:16px;box-shadow:0 4px 18px #173b2a08}.cardhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:22px}.cardicon{flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:var(--soft);color:var(--green);display:grid;place-items:center;font-weight:800}.cardhead h2{font-size:16px;margin:1px 0 5px}.cardhead p{font-size:12px;color:var(--muted);margin:0;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:17px 16px}.field{min-width:0}.field.full{grid-column:1/-1}label{display:block;font-size:12px;font-weight:750;margin:0 0 7px;color:#34443c}.hint{font-size:11px;color:var(--muted);font-weight:450;margin-left:4px}input,select,textarea{width:100%;border:1px solid #dce5df;border-radius:9px;padding:12px;background:#fff;color:var(--ink);font:inherit;font-size:13px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px #16845b18}input[type=file]{padding:10px;font-size:12px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{display:flex;align-items:center;gap:8px;font-size:12px;color:#45544c}.check input{width:auto;accent-color:var(--green)}.radio-row{display:flex;gap:16px;flex-wrap:wrap}.radio-row label{font-weight:500;display:flex;align-items:center;gap:7px;margin:0}.radio-row input{width:auto;accent-color:var(--green)}
+.note{padding:12px 14px;border-radius:10px;background:#f5f8f6;border:1px solid var(--line);font-size:11px;color:#5f7067;line-height:1.55;margin-top:14px}.warning{background:#fff7ed;border-color:#f5d6b5;color:#82551c}.uploadbox{border:1px dashed #bdcec3;border-radius:11px;padding:14px;background:#fbfdfb;min-width:0}.uploadbox label{margin-bottom:9px}.uploadbox input{background:#fff}.uploadgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:22px 0 40px}.action-right{display:flex;gap:10px}.btn{border:0;border-radius:10px;padding:12px 18px;font-weight:750;font-size:13px;cursor:pointer}.btn.primary{background:var(--green);color:#fff}.btn.primary:hover{background:var(--green-dark)}.btn.secondary{background:#fff;border:1px solid var(--line);color:#44534b}.btn:disabled{opacity:.45;cursor:not-allowed}.footer{text-align:center;color:#89968f;font-size:11px;padding:8px 0 28px}.hidden{display:none!important}.pill{display:inline-block;background:#eaf5ef;color:var(--green-dark);font-size:10px;font-weight:800;padding:5px 8px;border-radius:20px;margin-left:5px}.doc-list{display:grid;gap:10px}.doc-row{border:1px solid var(--line);border-radius:12px;padding:13px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}.doc-title{font-size:13px;font-weight:750;margin-bottom:5px}.doc-meta{font-size:11px;color:var(--muted);line-height:1.5}.status{display:inline-block;border-radius:20px;padding:4px 8px;font-size:10px;font-weight:800;margin-right:5px}.status.uploaded{background:#eaf5ef;color:var(--green-dark)}.status.missing{background:#fff0ed;color:var(--danger)}.doc-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.mini-btn{border:1px solid var(--line);background:#fff;color:var(--green-dark);padding:7px 9px;border-radius:8px;font-size:11px;font-weight:750;cursor:pointer}.mini-btn:hover{border-color:var(--green)}.doc-upload{margin-top:10px}.validation{color:var(--danger);font-size:12px;margin-top:10px;line-height:1.5}.review-panel{background:#f5f8f6;border:1px solid var(--line);padding:14px;border-radius:10px;font-size:12px;line-height:1.6;white-space:pre-wrap}
+@media(max-width:800px){.wrap{grid-template-columns:1fr;margin:20px auto}.side{position:static}.steps{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.topbar{padding:12px 16px}.intro h1{font-size:23px}.horizontal-stepper{padding:10px;gap:4px}.hstep{display:grid;justify-items:center;text-align:center;gap:5px;font-size:10px}}
+@media(max-width:480px){.card{padding:19px}.uploadgrid,.checks{grid-template-columns:1fr}.preview{font-size:9px;padding:6px 8px}.wrap{padding:0 12px}.horizontal-stepper{margin-bottom:12px}.doc-row{grid-template-columns:1fr}.doc-actions{justify-content:flex-start}.actions{align-items:stretch}.action-right{flex:1}.actions .btn{padding:11px 12px}.action-right .btn{flex:1}.side{padding:16px}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="brand"><div class="logo">D</div><div>DART<small>MERCHANT PORTAL</small></div></div><div class="preview">KYC FORM PREVIEW · DEMO ONLY</div></header>
+<div class="wrap">
+<aside class="side">
+  <h3>Account verification</h3><p>Complete each step to prepare your business and authorized-person details for verification.</p>
+  <div class="steps" id="sidebarSteps">
+    <div class="step active" data-step="0"><span class="num">1</span><span>Business information</span></div>
+    <div class="step" data-step="1"><span class="num">2</span><span>Business address</span></div>
+    <div class="step" data-step="2"><span class="num">3</span><span>Authorized person</span></div>
+    <div class="step" data-step="3"><span class="num">4</span><span>Government ID & documents</span></div>
+  </div>
+  <div class="note"><b>Demo notice</b><br>This frontend preview does not send or store information. Existing profile-document detection needs a connected backend endpoint.</div>
+</aside>
+<main class="main">
+  <div class="intro"><div class="eyebrow">Xendit verification</div><h1>Business KYC Details</h1><p>Provide accurate information that matches your official business documents and government-issued ID.</p></div>
+  <div class="horizontal-stepper" id="horizontalStepper" aria-label="Form progress">
+    <div class="hstep active" data-step="0"><span class="num">1</span><span>Business Information</span></div>
+    <div class="hstep" data-step="1"><span class="num">2</span><span>Business Address</span></div>
+    <div class="hstep" data-step="2"><span class="num">3</span><span>Authorized Person</span></div>
+    <div class="hstep" data-step="3"><span class="num">4</span><span>ID & Documents</span></div>
+  </div>
+  <form id="kycForm" novalidate>
+    <section class="card step-panel" data-panel="0">
+      <div class="cardhead"><div class="cardicon">01</div><div><h2>Business information</h2><p>Tell us about your registered business and how you plan to use Xendit.</p></div></div>
+      <div class="grid">
+        <div class="field full"><label for="entity">Legal entity</label><select id="entity" name="entity" required><option value="sole">Sole Proprietorship</option><option value="partnership">Partnership</option><option value="corp">Corporation</option></select></div>
+        <div class="field full"><label for="businessName">Business legal name</label><input id="businessName" name="businessName" placeholder="As shown on DTI / SEC and BIR documents" required></div>
+        <div class="field"><label for="tin">Business TIN</label><input id="tin" name="tin" placeholder="e.g. 123-456-789-000" required></div>
+        <div class="field"><label id="regLabel" for="regNo">DTI registration number</label><input id="regNo" name="regNo" placeholder="Enter DTI registration number" required></div>
+        <div class="field"><label for="estDate">Business establishment date <span class="pill">Required</span></label><input id="estDate" name="estDate" type="date" required></div>
+        <div class="field"><label for="frequency">Expected money-out frequency</label><select id="frequency" name="frequency" required><option value="">Select frequency</option><option>Daily</option><option>Weekly</option><option>Monthly</option><option>Occasionally</option></select></div>
+        <div class="field full"><label>How will you use Xendit? <span class="hint">Select all that apply</span></label><div class="checks" id="xenditUse"><label class="check"><input type="checkbox" name="xenditUsage" value="Payments"> Payments</label><label class="check"><input type="checkbox" name="xenditUsage" value="Payouts"> Payouts</label><label class="check"><input type="checkbox" name="xenditUsage" value="Global payouts"> Global payouts</label><label class="check"><input type="checkbox" name="xenditUsage" value="Business expenses"> Business expenses</label></div></div>
+        <div class="field full"><label for="funds">Source of funds</label><select id="funds" name="funds" required><option value="">Select source of funds</option><option>Business revenue</option><option>Investor / shareholder funding</option><option>Investment income</option><option>Business loan</option><option>Personal funding</option><option>Donations</option><option>Grants</option><option>Other</option></select></div>
+        <div class="field full"><label for="url">Promotional website / store URL <span class="hint">Website, social page, or online store</span></label><input id="url" name="url" type="url" placeholder="https://yourbusiness.com"></div>
+      </div><div class="note">The registration number label changes with the selected legal entity. If your business has no website/store, leave the URL blank. Promotional material is only requested later if it is needed to support the URL.</div>
+    </section>
+    <section class="card step-panel hidden" data-panel="1">
+      <div class="cardhead"><div class="cardicon">02</div><div><h2>Business address</h2><p>Provide the registered address, your residential address, and an operating address only if it differs.</p></div></div>
+      <div class="grid">
+        <div class="field full"><label for="regAddress">Registered business address</label><input id="regAddress" name="regAddress" placeholder="Street, barangay, city, province, postal code" required></div>
+        <div class="field full"><label>Is your operating address different from the registered address?</label><div class="radio-row"><label><input type="radio" name="different" value="no" checked> No, same address</label><label><input type="radio" name="different" value="yes"> Yes, different address</label></div></div>
+        <div class="field full hidden" id="operatingWrap"><label for="operatingAddress">Operating address</label><input id="operatingAddress" name="operatingAddress" placeholder="Enter operating address"></div>
+        <div class="field full"><label for="resAddress">Authorized person's residential address</label><input id="resAddress" name="resAddress" placeholder="Street, barangay, city, province, postal code" required></div>
+      </div><div class="note">The operating address is only required when you select that it differs from the registered business address.</div>
+    </section>
+    <section class="card step-panel hidden" data-panel="2">
+      <div class="cardhead"><div class="cardicon">03</div><div><h2>Authorized person</h2><p>Details must match the person whose government ID is submitted for verification.</p></div></div>
+      <div class="grid">
+        <div class="field"><label for="role">Role / Position</label><select id="role" name="role" required><option value="">Select role / position</option><option>Business owner</option><option>Authorized representative</option><option>Director</option><option>Partner</option><option>President</option><option>Corporate secretary</option><option>Other officer</option></select></div>
+        <div class="field"><label for="nationality">Nationality</label><select id="nationality" name="nationality" required><option value="Filipino">Filipino</option><option value="Other">Other</option></select></div>
+        <div class="field"><label for="first">First name</label><input id="first" name="first" placeholder="First name" required></div>
+        <div class="field"><label for="middle">Middle name <span class="hint">Optional</span></label><input id="middle" name="middle" placeholder="Middle name"></div>
+        <div class="field"><label for="last">Surname</label><input id="last" name="last" placeholder="Surname" required></div>
+        <div class="field"><label for="dob">Date of birth</label><input id="dob" name="dob" type="date" required></div>
+        <div class="field full"><label>Gender</label><div class="radio-row"><label><input type="radio" name="gender" value="Female" required> Female</label><label><input type="radio" name="gender" value="Male"> Male</label><label><input type="radio" name="gender" value="Prefer not to say"> Prefer not to say</label></div></div>
+      </div>
+    </section>
+    <section class="card step-panel hidden" data-panel="3">
+      <div class="cardhead"><div class="cardicon">04</div><div><h2>Government ID & documents</h2><p>Use existing documents from Profile → Documents where available. Upload only missing or replacement files.</p></div></div>
+      <div class="grid">
+        <div class="field full"><label>Government ID option</label><div class="radio-row"><label><input type="radio" name="idgroup" value="primary" checked> One Primary ID</label><label><input type="radio" name="idgroup" value="secondary"> Two Secondary IDs</label></div></div>
+        <div class="field full" id="primaryWrap"><label for="primaryId">Primary ID type</label><select id="primaryId" name="primaryId"><option value="">Select ID type</option><option>Philippine National ID – Physical PhilID</option><option>Philippine National ID – Printed ePhilID</option><option>Philippine National ID – Digital National ID</option><option>Passport</option><option>Driver's License</option><option>SSS / GSIS</option><option>PRC ID</option><option>Postal ID</option><option>Voter's ID</option><option>UMID</option><option>ACR / Immigrant Certificate of Registration</option></select></div>
+        <div class="field full hidden" id="secondaryWrap"><div class="grid"><div class="field"><label for="secondary1">Secondary ID 1 type</label><select id="secondary1" name="secondary1"><option value="">Select first secondary ID</option></select></div><div class="field"><label for="secondary2">Secondary ID 2 type</label><select id="secondary2" name="secondary2"><option value="">Select second secondary ID</option></select></div></div></div>
+        <div class="field full"><label for="idNumber">Government ID number <span class="hint">For two IDs, enter the number for the selected ID below in the upload record</span></label><input id="idNumber" name="idNumber" placeholder="Enter government ID number" required></div>
+        <div class="field full"><div class="uploadgrid">
+          <div class="uploadbox"><label for="idFront">ID front image/document <span class="pill">Required</span></label><input id="idFront" type="file" accept="image/*,.pdf" required><div class="doc-meta">Clear, readable image or PDF.</div></div>
+          <div class="uploadbox"><label for="idBack">ID back image/document <span class="hint">When applicable</span></label><input id="idBack" type="file" accept="image/*,.pdf"><div class="doc-meta">Upload the reverse side if the ID has one.</div></div>
+        </div></div>
+      </div>
+      <div class="note">Xendit's ID acceptance rules should be confirmed against the current merchant onboarding guidance. This preview checks that files are selected but cannot verify their validity.</div>
+      <div class="cardhead" style="margin-top:26px;margin-bottom:14px"><div class="cardicon">DOC</div><div><h2>Business supporting documents</h2><p>Required documents change according to the selected legal entity. Existing profile files are shown when returned by the integration endpoint.</p></div></div>
+      <div class="note" id="documentSourceNote">Profile document integration is not connected. The demo will show any files selected in this form only; it cannot detect actual Profile → Documents uploads.</div>
+      <div class="doc-list" id="businessDocs"></div>
+      <div class="cardhead" style="margin-top:26px;margin-bottom:14px"><div class="cardicon">+</div><div><h2>Additional documents</h2><p>Only submit these when applicable to the DART onboarding review.</p></div></div>
+      <div class="doc-list" id="additionalDocs"></div>
+      <div class="note warning"><b>Separate DART requirement:</b> Mayor's Permit is listed here as a DART merchant onboarding requirement, not as a standard Xendit document requirement.</div>
+      <div id="docValidation" class="validation" aria-live="polite"></div>
+    </section>
+    <div id="validationMessage" class="validation" role="alert"></div>
+    <div class="actions"><button class="btn secondary" type="button" id="backBtn" disabled>Back</button><div class="action-right"><button class="btn secondary" type="button" id="resetBtn">Reset demo</button><button class="btn primary" type="button" id="nextBtn">Next</button></div></div>
+  </form>
+  <div class="footer">DART · Xendit KYC Form Concept · Internal UI Proposal · Not an official Xendit form</div>
+</main>
+</div>
+<script>
+(() => {
+  const form = document.getElementById('kycForm');
+  const panels = [...document.querySelectorAll('.step-panel')];
+  const sidebarSteps = [...document.querySelectorAll('#sidebarSteps .step')];
+  const horizontalSteps = [...document.querySelectorAll('#horizontalStepper .hstep')];
+  const entity = document.getElementById('entity');
+  const regLabel = document.getElementById('regLabel');
+  const regNo = document.getElementById('regNo');
+  const validationMessage = document.getElementById('validationMessage');
+  const docValidation = document.getElementById('docValidation');
+  let currentStep = 0;
+  // API integration point: implement GET /api/profile/documents to return the same
+  // document records used by Profile -> Documents, including id/type/status/previewUrl.
+  // No live detection is claimed until this endpoint is connected.
+  let profileDocuments = null;
+  const requiredDocs = {
+    sole: ['DTI Registration Document', 'BIR Form 2303'],
+    partnership: ['SEC Registration Certificate', "Notarized Partner's Certificate", 'Articles of Partnership', 'BIR Form 2303'],
+    corp: ['SEC Registration Certificate', "Notarized Secretary's Certificate", 'Articles of Incorporation', 'Latest General Information Sheet (GIS)', 'BIR Form 2303']
+  };
+  const secondary = ['AFP ID','PNP ID','BFP ID','PWD ID','DSWD Certification','GSIS e-Card','OFW ID','Police Clearance',"Seaman's Book",'NBI Clearance'];
+  ['secondary1','secondary2'].forEach(id => secondary.forEach(x => { const o=document.createElement('option'); o.value=x; o.textContent=x; document.getElementById(id).appendChild(o); }));
+  function updateEntity() {
+    const sole = entity.value === 'sole';
+    regLabel.textContent = sole ? 'DTI registration number' : 'SEC registration number';
+    regNo.placeholder = sole ? 'Enter DTI registration number' : 'Enter SEC registration number';
+    renderDocuments();
+  }
+  function setStep(n) {
+    currentStep = Math.max(0, Math.min(3, n));
+    panels.forEach((p,i) => p.classList.toggle('hidden', i !== currentStep));
+    [...sidebarSteps, ...horizontalSteps].forEach(el => {
+      const i = Number(el.dataset.step);
+      el.classList.toggle('active', i === currentStep);
+      el.classList.toggle('complete', i < currentStep);
+      const num = el.querySelector('.num');
+      num.textContent = i < currentStep ? '✓' : String(i+1);
+    });
+    document.getElementById('backBtn').disabled = currentStep === 0;
+    document.getElementById('nextBtn').textContent = currentStep === 3 ? 'Preview submission' : 'Next';
+    validationMessage.textContent = '';
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  function updateConditionalFields() {
+    const different = document.querySelector('input[name="different"]:checked')?.value === 'yes';
+    document.getElementById('operatingWrap').classList.toggle('hidden', !different);
+    document.getElementById('operatingAddress').required = different;
+    const primary = document.querySelector('input[name="idgroup"]:checked')?.value === 'primary';
+    document.getElementById('primaryWrap').classList.toggle('hidden', !primary);
+    document.getElementById('secondaryWrap').classList.toggle('hidden', primary);
+    document.getElementById('primaryId').required = primary;
+    document.getElementById('secondary1').required = !primary;
+    document.getElementById('secondary2').required = !primary;
+  }
+  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function getLocalFile(docName) {
+    return [...document.querySelectorAll('[data-doc-name]')].find(el => el.dataset.docName === docName)?.files?.[0] || null;
+  }
+  function documentRow(name, options={}) {
+    const match = profileDocuments?.find(d => (d.documentType || d.name) === name && d.status !== 'deleted');
+    const existing = match || null;
+    const local = getLocalFile(name);
+    const uploaded = !!existing || !!local;
+    const status = uploaded ? 'Uploaded' : 'Missing';
+    const details = existing ? (existing.fileName || existing.name || name) : local ? local.name : 'No existing file found in Profile → Documents.';
+    const preview = existing?.previewUrl || existing?.url || '';
+    const isRequired = options.required !== false;
+    return `<div class="doc-row" data-document-row="${escapeHtml(name)}">
+      <div><div class="doc-title">${escapeHtml(name)} ${isRequired ? '<span class="hint">Required</span>' : '<span class="hint">If applicable</span>'}</div>
+      <div class="doc-meta"><span class="status ${uploaded?'uploaded':'missing'}">${status}</span>${escapeHtml(details)}</div>
+      ${local ? `<div class="doc-meta">Selected in this form: ${escapeHtml(local.name)}</div>` : ''}
+      <div class="doc-upload hidden" id="uploadWrap-${slug(name)}"><label for="upload-${slug(name)}">Upload / replace document</label><input id="upload-${slug(name)}" data-doc-name="${escapeHtml(name)}" type="file" accept="image/*,.pdf,.doc,.docx" ${isRequired?'':' '}></div></div>
+      <div class="doc-actions">${preview ? `<button type="button" class="mini-btn" data-view-url="${escapeHtml(preview)}">View</button>` : existing ? '<span class="doc-meta">Preview unavailable</span>' : ''}
+      <button type="button" class="mini-btn" data-toggle-upload="${escapeHtml(name)}">${uploaded?'Re-upload / Replace':'Upload'}</button></div></div>`;
+  }
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+  function renderDocuments() {
+    const names = requiredDocs[entity.value] || requiredDocs.sole;
+    document.getElementById('businessDocs').innerHTML = names.map(n => documentRow(n)).join('');
+    document.getElementById('additionalDocs').innerHTML = [
+      documentRow('Promotional material', {required:false}),
+      documentRow("Mayor's Permit — DART onboarding requirement", {required:true})
+    ].join('');
+    docValidation.textContent = '';
+  }
+  document.addEventListener('click', e => {
+    const toggle = e.target.closest('[data-toggle-upload]');
+    if (toggle) {
+      const name = toggle.dataset.toggleUpload, wrap = document.getElementById('uploadWrap-'+slug(name));
+      if (wrap) { wrap.classList.remove('hidden'); wrap.querySelector('input').focus(); }
+    }
+    const view = e.target.closest('[data-view-url]');
+    if (view) window.open(view.dataset.viewUrl, '_blank', 'noopener,noreferrer');
+  });
+  // Re-render document rows after file selection so the local selected-file status updates.
+  document.addEventListener('change', e => {
+    if (e.target.matches('[data-doc-name]')) {
+      const name = e.target.dataset.docName;
+      const wrap = e.target.closest('.doc-upload');
+      const row = e.target.closest('.doc-row');
+      const meta = row.querySelector('.doc-meta');
+      if (e.target.files[0]) {
+        meta.innerHTML = `<span class="status uploaded">Selected</span>${escapeHtml(e.target.files[0].name)} — frontend selection only`;
+      }
+    }
+  });
+  function validateStep(index) {
+    validationMessage.textContent = '';
+    const panel = panels[index];
+    if (index === 0) {
+      const checkedUsage = [...form.querySelectorAll('input[name="xenditUsage"]:checked')];
+      if (!checkedUsage.length) { validationMessage.textContent = 'Select at least one Xendit usage option.'; return false; }
+    }
+    const fields = [...panel.querySelectorAll('input,select,textarea')].filter(el => el.required && !el.disabled && !el.closest('.hidden'));
+    for (const field of fields) {
+      if (field.type === 'file') {
+        if (!field.files || !field.files.length) { field.focus(); validationMessage.textContent = 'Please complete all required fields in this step before continuing.'; return false; }
+      } else if (field.type === 'radio') {
+        const group = form.querySelectorAll(`input[name="${field.name}"]`);
+        if (![...group].some(r => r.checked)) { field.focus(); validationMessage.textContent = 'Please complete all required fields in this step before continuing.'; return false; }
+      } else if (!field.value.trim()) { field.focus(); validationMessage.textContent = 'Please complete all required fields in this step before continuing.'; return false; }
+      else if (field.type === 'url' && field.value && !field.checkValidity()) { field.focus(); validationMessage.textContent = 'Enter a valid website URL, including https://.'; return false; }
+    }
+    if (index === 3) {
+      const missing = (requiredDocs[entity.value] || []).filter(name => {
+        const existing = profileDocuments?.some(d => (d.documentType || d.name) === name && d.status !== 'deleted');
+        const local = getLocalFile(name);
+        return !existing && !local;
+      });
+      const permit = "Mayor's Permit — DART onboarding requirement";
+      if (!profileDocuments && missing.length) {
+        docValidation.textContent = 'Profile → Documents is not connected. For this demo, upload the required business documents here or connect the profile-document API. Missing: ' + missing.join(', ');
+        validationMessage.textContent = 'Required business documents are missing or cannot yet be confirmed from Profile → Documents.';
+        return false;
+      }
+      const missingLocalOrProfile = missing.filter(name => !getLocalFile(name));
+      if (missingLocalOrProfile.length) { docValidation.textContent = 'Missing required documents: ' + missingLocalOrProfile.join(', '); validationMessage.textContent = 'Upload or confirm the required business documents before previewing.'; return false; }
+      if (!profileDocuments?.some(d => (d.documentType || d.name) === permit && d.status !== 'deleted') && !getLocalFile(permit)) {
+        docValidation.textContent = "DART onboarding requirement: upload the Mayor's Permit or connect Profile → Documents to confirm an existing copy.";
+        validationMessage.textContent = "The separate DART onboarding Mayor's Permit requirement is not confirmed.";
+        return false;
+      }
+    }
+    return true;
+  }
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (!validateStep(currentStep)) return;
+    if (currentStep < 3) { setStep(currentStep+1); return; }
+    const data = new FormData(form);
+    const usage = [...form.querySelectorAll('input[name="xenditUsage"]:checked')].map(x=>x.value).join(', ');
+    const summary = [
+      'DEMO PREVIEW — NOT SUBMITTED',
+      `Legal entity: ${entity.options[entity.selectedIndex].text}`,
+      `Business legal name: ${data.get('businessName')}`,
+      `Business establishment date: ${data.get('estDate')}`,
+      `Xendit usage: ${usage}`,
+      `Registered address: ${data.get('regAddress')}`,
+      `Operating address: ${data.get('operatingAddress') || 'Same as registered address'}`,
+      `Authorized person: ${data.get('first')} ${data.get('middle') || ''} ${data.get('last')}`,
+      `Role / Position: ${data.get('role')}`,
+      `ID option: ${data.get('idgroup')}`,
+      'Documents: frontend preview only; no files or form data have been submitted.'
+    ].join('\n');
+    alert(summary);
+  });
+  document.getElementById('backBtn').addEventListener('click', () => setStep(currentStep-1));
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    form.reset(); currentStep=0; profileDocuments=null; updateEntity(); updateConditionalFields(); renderDocuments(); setStep(0);
+    validationMessage.textContent=''; docValidation.textContent='';
+  });
+  entity.addEventListener('change', updateEntity);
+  document.querySelectorAll('input[name="different"],input[name="idgroup"]').forEach(el=>el.addEventListener('change', updateConditionalFields));
+  updateEntity(); updateConditionalFields(); renderDocuments(); setStep(0);
+
+  // Backend integration placeholder. Replace this stub with fetch('/api/profile/documents')
+  // once the shared Profile -> Documents API is available. Expected response:
+  // [{id, documentType, fileName, status, previewUrl, updatedAt}].
+  async function loadProfileDocuments() {
+    const PROFILE_DOCUMENTS_API = ''; // Example: '/api/profile/documents'
+    if (!PROFILE_DOCUMENTS_API) return;
+    try {
+      const response = await fetch(PROFILE_DOCUMENTS_API, {credentials:'include'});
+      if (!response.ok) throw new Error('Profile document request failed');
+      const payload = await response.json();
+      profileDocuments = Array.isArray(payload) ? payload : (payload.documents || []);
+      document.getElementById('documentSourceNote').textContent = 'Connected to Profile → Documents. Existing files below are matched by document type.';
+      renderDocuments();
+    } catch (err) {
+      document.getElementById('documentSourceNote').textContent = 'Could not load Profile → Documents. Existing uploads cannot be confirmed; please try again when the service is available.';
+      console.error('Profile document integration:', err);
+    }
+  }
+  loadProfileDocuments();
+})();
+</script>
+</body>
+</html>
