@@ -1,104 +1,69 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DART | Xendit KYC Preview</title>
-<style>
-:root{--green:#16845b;--green-dark:#106846;--orange:#f39a35;--ink:#17231f;--muted:#697872;--line:#e3ebe6;--bg:#f4f7f5;--white:#fff;--soft:#edf6f1}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
-.topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 1120px)/2))}
-.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.3px}.logo{width:36px;height:36px;border-radius:12px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:18px}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:1.4px;margin-top:1px}.preview{font-size:12px;color:#8b5a14;background:#fff5e8;border:1px solid #f5dfbf;padding:7px 11px;border-radius:20px;font-weight:700}
-.wrap{max-width:1120px;margin:36px auto;padding:0 20px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px}
-.side{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;height:max-content;position:sticky;top:20px}.side h3{font-size:14px;margin:0 0 5px}.side p{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 22px}.step{display:flex;gap:12px;align-items:center;padding:12px 8px;border-radius:10px;color:#78857f;font-size:13px;font-weight:650}.step.active{background:var(--soft);color:var(--green-dark)}.num{width:27px;height:27px;border:1px solid #dce6df;border-radius:50%;display:grid;place-items:center;font-size:11px;background:#fff}.step.active .num{background:var(--green);border-color:var(--green);color:#fff}
-.main{min-width:0}.intro{margin:0 0 20px}.eyebrow{font-size:11px;color:var(--green);font-weight:800;letter-spacing:1.5px;text-transform:uppercase}.intro h1{font-size:27px;margin:7px 0 7px;letter-spacing:-.7px}.intro p{font-size:14px;color:var(--muted);margin:0;line-height:1.6}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin-bottom:16px;box-shadow:0 4px 18px #173b2a08}.cardhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:22px}.cardicon{width:38px;height:38px;border-radius:12px;background:var(--soft);color:var(--green);display:grid;place-items:center;font-weight:800}.cardhead h2{font-size:16px;margin:1px 0 5px}.cardhead p{font-size:12px;color:var(--muted);margin:0;line-height:1.5}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:17px 16px}.field{min-width:0}.field.full{grid-column:1/-1}label{display:block;font-size:12px;font-weight:750;margin:0 0 7px;color:#34443c}.hint{font-size:11px;color:var(--muted);font-weight:450;margin-left:4px}input,select,textarea{width:100%;border:1px solid #dce5df;border-radius:9px;padding:12px 12px;background:#fff;color:var(--ink);font:inherit;font-size:13px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px #16845b18}input[type=file]{padding:10px;font-size:12px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px}.check{display:flex;align-items:center;gap:8px;font-size:12px;color:#45544c}.check input{width:auto;accent-color:var(--green)}.radio-row{display:flex;gap:16px;flex-wrap:wrap}.radio-row label{font-weight:500;display:flex;align-items:center;gap:7px;margin:0}.radio-row input{width:auto;accent-color:var(--green)}
-.note{padding:12px 14px;border-radius:10px;background:#f5f8f6;border:1px solid var(--line);font-size:11px;color:#5f7067;line-height:1.55;margin-top:14px}.uploadbox{border:1px dashed #bdcec3;border-radius:11px;padding:14px;background:#fbfdfb}.uploadbox label{margin-bottom:9px}.uploadbox input{background:#fff}.uploadgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.actions{display:flex;justify-content:space-between;align-items:center;margin:22px 0 40px}.btn{border:0;border-radius:10px;padding:12px 18px;font-weight:750;font-size:13px;cursor:pointer}.btn.primary{background:var(--green);color:#fff}.btn.primary:hover{background:var(--green-dark)}.btn.secondary{background:#fff;border:1px solid var(--line);color:#44534b}.btn:disabled{opacity:.45;cursor:not-allowed}.footer{text-align:center;color:#89968f;font-size:11px;padding:8px 0 28px}.hidden{display:none!important}.pill{display:inline-block;background:#eaf5ef;color:var(--green-dark);font-size:10px;font-weight:800;padding:5px 8px;border-radius:20px;margin-left:5px}
-@media(max-width:800px){.wrap{grid-template-columns:1fr;margin:22px auto}.side{position:static}.steps{display:grid;grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.field.full{grid-column:auto}.topbar{padding:0 16px}.intro h1{font-size:23px}}
-@media(max-width:480px){.card{padding:19px}.uploadgrid,.checks{grid-template-columns:1fr}.preview{font-size:10px}.steps{grid-template-columns:1fr 1fr}}
-</style>
-</head>
-<body>
-<header class="topbar">
-  <div class="brand"><div class="logo">D</div><div>DART<small>MERCHANT PORTAL</small></div></div>
-  <div class="preview">KYC FORM PREVIEW · DEMO ONLY</div>
-</header>
-<div class="wrap">
-  <aside class="side">
-    <h3>Account verification</h3>
-    <p>Complete the business and authorized-person details for the Xendit verification process.</p>
-    <div class="steps">
-      <div class="step active"><span class="num">1</span> Business information</div>
-      <div class="step"><span class="num">2</span> Business address</div>
-      <div class="step"><span class="num">3</span> Authorized person</div>
-      <div class="step"><span class="num">4</span> Government ID</div>
+from pathlib import Path
+import re
+
+src = Path("/mnt/data/dart_xendit_kyc_prototype.html")
+html = src.read_text(encoding="utf-8")
+
+# Add top horizontal stepper styles and responsive behavior.
+html = html.replace(
+".main{min-width:0}.intro{margin:0 0 20px}",
+""".main{min-width:0}.intro{margin:0 0 20px}
+.progress{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 18px;padding:15px 18px;background:#fff;border:1px solid var(--line);border-radius:15px}
+.progress-step{display:flex;align-items:center;gap:9px;min-width:0;color:#89958f;font-size:11px;font-weight:750}
+.progress-step .bubble{width:28px;height:28px;flex:0 0 28px;border:1px solid #dce6df;border-radius:50%;display:grid;place-items:center;background:#fff;font-size:11px}
+.progress-step.active{color:var(--green-dark)}
+.progress-step.active .bubble{background:var(--green);border-color:var(--green);color:#fff}
+.progress-step.done{color:var(--green-dark)}
+.progress-step.done .bubble{background:var(--soft);border-color:#b9d9c7;color:var(--green-dark)}
+.progress-step .step-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+section.card{display:none}section.card.current{display:block}
+.actions{gap:12px}
+@media(max-width:800px){.progress{padding:12px 10px;gap:4px}.progress-step{gap:6px;font-size:10px}.progress-step .bubble{width:25px;height:25px;flex-basis:25px}}
+@media(max-width:480px){.progress{grid-template-columns:repeat(4,minmax(0,1fr));padding:10px 7px}.progress-step{flex-direction:column;justify-content:center;text-align:center;gap:4px;font-size:9px}.progress-step .step-label{white-space:normal;line-height:1.2}}"""
+)
+
+# Give the sidebar steps stable identifiers.
+html = html.replace(
+'<div class="step active"><span class="num">1</span> Business information</div>\n      <div class="step"><span class="num">2</span> Business address</div>\n      <div class="step"><span class="num">3</span> Authorized person</div>\n      <div class="step"><span class="num">4</span> Government ID</div>',
+'<div class="step active" data-side-step="0"><span class="num">1</span> Business information</div>\n      <div class="step" data-side-step="1"><span class="num">2</span> Business address</div>\n      <div class="step" data-side-step="2"><span class="num">3</span> Authorized person</div>\n      <div class="step" data-side-step="3"><span class="num">4</span> Government ID</div>'
+)
+
+# Insert horizontal progress indicator above form.
+html = html.replace(
+'<form id="kycForm">\n      <section class="card">',
+'''<div class="progress" aria-label="KYC form progress">
+      <div class="progress-step active" data-progress-step="0"><span class="bubble">1</span><span class="step-label">Business information</span></div>
+      <div class="progress-step" data-progress-step="1"><span class="bubble">2</span><span class="step-label">Business address</span></div>
+      <div class="progress-step" data-progress-step="2"><span class="bubble">3</span><span class="step-label">Authorized person</span></div>
+      <div class="progress-step" data-progress-step="3"><span class="bubble">4</span><span class="step-label">Government ID</span></div>
     </div>
-    <div class="note"><b>Demo notice</b><br>This is a visual prototype only. It does not collect, store, or submit information to DART or Xendit.</div>
-  </aside>
-  <main class="main">
-    <div class="intro"><div class="eyebrow">Xendit verification</div><h1>Business KYC Details</h1><p>Provide accurate information that matches your official business documents and government-issued ID.</p></div>
     <form id="kycForm">
-      <section class="card">
-        <div class="cardhead"><div class="cardicon">01</div><div><h2>Business information</h2><p>Tell us about your registered business and how you plan to use Xendit.</p></div></div>
-        <div class="grid">
-          <div class="field full"><label for="entity">Legal entity</label><select id="entity" required><option value="sole">Sole Proprietorship</option><option value="corp">Corporation</option><option value="partnership">Partnership</option></select></div>
-          <div class="field full"><label for="businessName">Business legal name</label><input id="businessName" placeholder="As shown on DTI / SEC and BIR documents" required></div>
-          <div class="field"><label for="tin">Business TIN</label><input id="tin" placeholder="e.g. 123-456-789-000" required></div>
-          <div class="field"><label id="regLabel" for="regNo">DTI business name number</label><input id="regNo" placeholder="Enter DTI registration number" required></div>
-          <div class="field"><label for="estDate">Business establishment date</label><input id="estDate" type="date"></div>
-          <div class="field"><label for="frequency">Expected money-out frequency</label><select id="frequency"><option value="">Select frequency</option><option>Daily</option><option>Weekly</option><option>Monthly</option><option>Occasionally</option></select></div>
-          <div class="field full"><label>How will you use Xendit?</label><div class="checks">
-            <label class="check"><input type="checkbox" checked> Payments</label><label class="check"><input type="checkbox" checked> Payouts</label><label class="check"><input type="checkbox"> Global payouts</label><label class="check"><input type="checkbox"> Business expenses</label>
-          </div></div>
-          <div class="field full"><label for="funds">Where will the funds come from?</label><select id="funds"><option value="">Select source of funds</option><option>Business revenue</option><option>Investor / shareholder funding</option><option>Investment income</option><option>Business loan</option><option>Personal funding</option><option>Donations</option><option>Grants</option><option>Other</option></select></div>
-          <div class="field full"><label for="url">Promotional website / social media / online store</label><input id="url" type="url" placeholder="https://facebook.com/yourbusiness"></div>
+      <section class="card current" data-form-step="0">''',
+1
+)
+
+# Add step indices to remaining sections.
+html = html.replace('<section class="card">\n        <div class="cardhead"><div class="cardicon">02"', '<section class="card" data-form-step="1">\n        <div class="cardhead"><div class="cardicon">02"', 1)
+html = html.replace('<section class="card">\n        <div class="cardhead"><div class="cardicon">03"', '<section class="card" data-form-step="2">\n        <div class="cardhead"><div class="cardicon">03"', 1)
+html = html.replace('<section class="card">\n        <div class="cardhead"><div class="cardicon">04"', '<section class="card" data-form-step="3">\n        <div class="cardhead"><div class="cardicon">04"', 1)
+
+# Replace bottom actions with wizard navigation.
+html = html.replace(
+'''<div class="actions"><button class="btn secondary" type="reset">Reset demo</button><button class="btn primary" type="button" id="previewBtn">Preview submission</button></div>''',
+'''<div class="actions">
+        <button class="btn secondary" type="reset">Reset demo</button>
+        <div style="display:flex;gap:9px">
+          <button class="btn secondary" type="button" id="prevBtn" disabled>Back</button>
+          <button class="btn primary" type="button" id="nextBtn">Next step</button>
+          <button class="btn primary hidden" type="button" id="previewBtn">Preview submission</button>
         </div>
-        <div class="note">Registration document changes according to the selected legal entity. Only the applicable DTI or SEC document should be requested in the Documents section.</div>
-      </section>
-      <section class="card">
-        <div class="cardhead"><div class="cardicon">02</div><div><h2>Business address</h2><p>Enter your registered business address and indicate whether your operating address is different.</p></div></div>
-        <div class="grid">
-          <div class="field full"><label for="regAddress">Registered business address</label><input id="regAddress" placeholder="Street, barangay, city, province, postal code"></div>
-          <div class="field full"><label>Is your operating address different?</label><div class="radio-row"><label><input type="radio" name="different" value="no" checked> No</label><label><input type="radio" name="different" value="yes"> Yes</label></div></div>
-          <div class="field full hidden" id="operatingWrap"><label for="operatingAddress">Operating address</label><input id="operatingAddress" placeholder="Enter operating address"></div>
-          <div class="field full"><label for="resAddress">Authorized person's residential address</label><input id="resAddress" placeholder="Street, barangay, city, province, postal code"></div>
-        </div>
-        <div class="note">Additional address proof may be requested by Xendit when applicable.</div>
-      </section>
-      <section class="card">
-        <div class="cardhead"><div class="cardicon">03</div><div><h2>Authorized person</h2><p>Details must match the person whose government ID is submitted for verification.</p></div></div>
-        <div class="grid">
-          <div class="field"><label for="role">Role in the business</label><select id="role"><option value="">Select role</option><option>Business owner</option><option>Authorized representative</option><option>Director</option><option>Partner</option></select></div>
-          <div class="field"><label for="nationality">Nationality</label><select id="nationality"><option value="PH">Philippines</option><option value="other">Other</option></select></div>
-          <div class="field"><label for="first">First name</label><input id="first" placeholder="First name"></div>
-          <div class="field"><label for="middle">Middle name <span class="hint">if applicable</span></label><input id="middle" placeholder="Middle name"></div>
-          <div class="field"><label for="last">Surname</label><input id="last" placeholder="Last name"></div>
-          <div class="field"><label for="dob">Date of birth</label><input id="dob" type="date"></div>
-        </div>
-      </section>
-      <section class="card">
-        <div class="cardhead"><div class="cardicon">04</div><div><h2>Government ID verification</h2><p>Select the appropriate ID option and provide clear images of the document.</p></div></div>
-        <div class="grid">
-          <div class="field full"><label>Which type of ID will you provide?</label><div class="radio-row"><label><input type="radio" name="idgroup" value="primary" checked> One Primary ID</label><label><input type="radio" name="idgroup" value="secondary"> Two Secondary IDs</label></div></div>
-          <div class="field full" id="primaryWrap"><label for="primaryId">Primary ID type</label><select id="primaryId">
-            <option value="">Select ID type</option><option value="PH_NATIONAL_ID">Philippine National ID – Physical PhilID</option><option value="PH_NATIONAL_ID">Philippine National ID – Printed ePhilID</option><option value="PH_NATIONAL_ID">Philippine National ID – Digital National ID</option><option>Passport</option><option>Driver's License</option><option>SSS / GSIS</option><option>PRC ID</option><option>Postal ID</option><option>Voter's ID</option><option>UMID</option><option>ACR / Immigrant Certificate of Registration</option>
-          </select></div>
-          <div class="field full hidden" id="secondaryWrap"><label for="secondary1">Secondary ID 1</label><select id="secondary1"><option value="">Select first secondary ID</option></select><label for="secondary2" style="margin-top:12px">Secondary ID 2</label><select id="secondary2"><option value="">Select second secondary ID</option></select></div>
-          <div class="field full"><label for="idNumber">Government ID number</label><input id="idNumber" placeholder="Enter ID number"></div>
-          <div class="field full"><div class="uploadgrid">
-            <div class="uploadbox"><label for="front">ID front side <span class="pill">Required</span></label><input id="front" type="file" accept="image/*,.pdf"></div>
-            <div class="uploadbox"><label for="back">ID back side <span class="hint">if applicable</span></label><input id="back" type="file" accept="image/*,.pdf"></div>
-          </div></div>
-        </div>
-        <div class="note">Xendit's published requirements list one accepted Primary ID or two accepted Secondary IDs. National ID is included as an accepted Primary ID. This prototype does not verify documents or submit them to Xendit.</div>
-      </section>
-      <div class="actions"><button class="btn secondary" type="reset">Reset demo</button><button class="btn primary" type="button" id="previewBtn">Preview submission</button></div>
-    </form>
-    <div class="footer">DART · Xendit KYC Form Concept · Internal UI Proposal · Not an official Xendit form</div>
-  </main>
-</div>
-<script>
+      </div>'''
+)
+
+# Replace existing script with wizard-aware script, retaining dynamic fields.
+script_start = html.index('<script>')
+script_end = html.index('</script>', script_start) + len('</script>')
+new_script = r'''<script>
 const entity=document.getElementById('entity'), regLabel=document.getElementById('regLabel'), regNo=document.getElementById('regNo');
 entity.addEventListener('change',()=>{
   const sole=entity.value==='sole';
@@ -115,7 +80,39 @@ document.querySelectorAll('input[name="idgroup"]').forEach(el=>el.addEventListen
   document.getElementById('primaryWrap').classList.toggle('hidden',!primary);
   document.getElementById('secondaryWrap').classList.toggle('hidden',primary);
 }));
-document.getElementById('previewBtn').addEventListener('click',()=>{
+
+let currentStep=0;
+const formSteps=[...document.querySelectorAll('[data-form-step]')];
+const progressSteps=[...document.querySelectorAll('[data-progress-step]')];
+const sideSteps=[...document.querySelectorAll('[data-side-step]')];
+const prevBtn=document.getElementById('prevBtn');
+const nextBtn=document.getElementById('nextBtn');
+const previewBtn=document.getElementById('previewBtn');
+
+function showStep(index){
+  currentStep=Math.max(0,Math.min(3,index));
+  formSteps.forEach((section,i)=>section.classList.toggle('current',i===currentStep));
+  progressSteps.forEach((step,i)=>{
+    step.classList.toggle('active',i===currentStep);
+    step.classList.toggle('done',i<currentStep);
+    step.querySelector('.bubble').textContent=i<currentStep?'✓':String(i+1);
+  });
+  sideSteps.forEach((step,i)=>{
+    step.classList.toggle('active',i===currentStep);
+    step.classList.toggle('done',i<currentStep);
+    step.querySelector('.num').textContent=i<currentStep?'✓':String(i+1);
+  });
+  prevBtn.disabled=currentStep===0;
+  nextBtn.classList.toggle('hidden',currentStep===3);
+  previewBtn.classList.toggle('hidden',currentStep!==3);
+  document.querySelector('.progress').setAttribute('aria-label',`Step ${currentStep+1} of 4`);
+}
+nextBtn.addEventListener('click',()=>showStep(currentStep+1));
+prevBtn.addEventListener('click',()=>showStep(currentStep-1));
+progressSteps.forEach((step,i)=>step.addEventListener('click',()=>{if(i<=currentStep)showStep(i)}));
+sideSteps.forEach((step,i)=>step.addEventListener('click',()=>{if(i<=currentStep)showStep(i)}));
+
+previewBtn.addEventListener('click',()=>{
   alert('Demo preview only. No information has been submitted or stored. Please review the fields and conditional behavior with the DART development team.');
 });
 document.getElementById('kycForm').addEventListener('reset',()=>{
@@ -124,8 +121,13 @@ document.getElementById('kycForm').addEventListener('reset',()=>{
     document.getElementById('operatingWrap').classList.add('hidden');
     document.getElementById('primaryWrap').classList.remove('hidden');
     document.getElementById('secondaryWrap').classList.add('hidden');
+    showStep(0);
   },0);
 });
-</script>
-</body>
-</html>
+showStep(0);
+</script>'''
+html = html[:script_start] + new_script + html[script_end:]
+
+out = Path("/mnt/data/dart_xendit_kyc_prototype_updated.html")
+out.write_text(html, encoding="utf-8")
+print(f"Updated prototype created: {out}")
